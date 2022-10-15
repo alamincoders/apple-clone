@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.12",
     "@sanity/core": "^2.34.0",
     "next": "latest",
     "react": "18.1.0",

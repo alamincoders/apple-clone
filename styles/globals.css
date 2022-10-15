@@ -1,3 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;1,600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body{
+    @apply font-body text-[#232428]
+  }
+}
+
+@layer components {
+  .headerLink {
+    @apply cursor-pointer opacity-75 transition hover:opacity-100;
+  }
+  .headerIcon {
+    @apply cursor-pointer w-6 h-6 opacity-75 transition hover:opacity-100;
+  }
+}
