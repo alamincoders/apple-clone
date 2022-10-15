@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Footer from "./Footer";
 import Header from "./Header";
 
 const Layout = ({ children }: any) => {
@@ -14,7 +15,10 @@ const Layout = ({ children }: any) => {
 
       <main className="lg:container lg:mx-auto">{children}</main>
 
-      <footer>{/* footer */}</footer>
+      <footer>
+        {/* footer */}
+        <Footer />
+      </footer>
     </>
   );
 };

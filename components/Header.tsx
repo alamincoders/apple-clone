@@ -13,10 +13,10 @@ const Header = () => {
         </Link>
       </div>
       <div className="hidden flex-1 items-center justify-center space-x-8 md:flex">
-        <a className="headerLink">Product</a>
-        <a className="headerLink">Explore</a>
-        <a className="headerLink">Support</a>
-        <a className="headerLink">Business</a>
+        <a className="headerLink link">Product</a>
+        <a className="headerLink link">Explore</a>
+        <a className="headerLink link">Support</a>
+        <a className="headerLink link">Business</a>
       </div>
       <div className="flex items-center justify-center space-x-4 md:w-1/5">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="headerIcon">
