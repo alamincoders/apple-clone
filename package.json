@@ -9,13 +9,15 @@
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
     "@portabletext/react": "^1.0.6",
+    "@reduxjs/toolkit": "^1.8.6",
     "@sanity/core": "^2.34.0",
     "@sanity/image-url": "^1.0.1",
     "next": "latest",
     "next-sanity": "^1.0.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "react-icons": "^4.6.0"
+    "react-icons": "^4.6.0",
+    "react-redux": "^8.0.4"
   },
   "devDependencies": {
     "@types/node": "17.0.35",
