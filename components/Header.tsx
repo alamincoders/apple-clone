@@ -1,8 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { selectBasketItems } from "../redux/feature/basketSlice";
 
 const Header = () => {
+  const items = useSelector(selectBasketItems);
   const session = false;
+
   return (
     <header className="sticky top-0 z-30 w-full items-center justify-between bg-[#e7ecee] p-4 flex">
       <div className="flex items-center justify-center md:w-1/5">
@@ -33,7 +37,7 @@ const Header = () => {
             </svg>
 
             <span className="absolute -right-1 -top-1 z-50  rounded-full bg-gradient-to-r from-pink-500 to-violet-500 w-4 h-4 flex items-center justify-center p-1 text-white text-[10px]">
-              5
+              {items.length}
             </span>
           </div>
         </Link>
