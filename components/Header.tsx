@@ -36,9 +36,11 @@ const Header = () => {
               />
             </svg>
 
-            <span className="absolute -right-1 -top-1 z-50  rounded-full bg-gradient-to-r from-pink-500 to-violet-500 w-4 h-4 flex items-center justify-center p-1 text-white text-[10px]">
-              {items.length}
-            </span>
+            {items.length > 0 && (
+              <span className="absolute -right-2 -top-2 z-50 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-violet-500 text-[10px] text-white">
+                {items.length}
+              </span>
+            )}
           </div>
         </Link>
         {session ? (
