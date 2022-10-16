@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Currency from "react-currency-formatter";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { removeFromBasket } from "../redux/feature/basketSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromBasket, selectBasketTotal } from "../redux/feature/basketSlice";
 import { urlFor } from "../sanity";
 
 interface Props {
@@ -11,6 +11,8 @@ interface Props {
 }
 
 const CheckoutProduct = ({ items, id }: Props) => {
+  const basketTotal = useSelector(selectBasketTotal);
+
   const dispatch = useDispatch();
 
   const removeItemFromBasket = () => {
@@ -20,7 +22,7 @@ const CheckoutProduct = ({ items, id }: Props) => {
     });
   };
 
-  const basketTotal = items.reduce((total, item) => total + item.price, 0);
+  //   const basketTotal = items.reduce((total, item) => total + item.price, 0);
 
   return (
     <div className="flex flex-col gap-x-4 border-b border-gray-300 pb-5 lg:flex-row lg:items-center">
