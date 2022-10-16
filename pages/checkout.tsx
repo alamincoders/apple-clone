@@ -4,16 +4,21 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Currency from "react-currency-formatter";
 import { useSelector } from "react-redux";
+import { Stripe } from "stripe";
 import emptyImg from "../assets/images/empty.gif";
 import Button from "../components/Button";
 import CheckoutProduct from "../components/CheckoutProduct";
 import { selectBasketItems, selectBasketTotal } from "../redux/feature/basketSlice";
+import { fetchPostJSON } from "../utils/api-helpers";
+import getStripe from "../utils/get-stripe";
 
 const Checkout = () => {
   const items = useSelector(selectBasketItems);
   const basketTotal = useSelector(selectBasketTotal);
   const router = useRouter();
   const [groupedItemsInBasket, setGroupedItemsInBasket] = useState({} as { [key: string]: Product[] });
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const groupedItems = items.reduce((results, item) => {
@@ -22,6 +27,35 @@ const Checkout = () => {
     }, {} as { [key: string]: Product[] });
     setGroupedItemsInBasket(groupedItems);
   }, [items]);
+
+  const createCheckoutSession = async () => {
+    setLoading(true);
+    const checkoutSession: Stripe.Checkout.Session = await fetchPostJSON("/api/checkout_sessions", {
+      items: items,
+    });
+
+    // https://vercel.com/guides/getting-started-with-nextjs-typescript-stripe docs
+
+    // internal server error
+    if ((checkoutSession as any).statusCode === 500) {
+      console.error((checkoutSession as any).message);
+      return;
+    }
+
+    // Redirect to Checkout.
+    const stripe = await getStripe();
+    const { error } = await stripe!.redirectToCheckout({
+      // Make the id field from the Checkout Session creation API response
+      // available to this file, so you can provide it as parameter here
+      // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+      sessionId: checkoutSession.id,
+    });
+    // If `redirectToCheckout` fails due to a browser or network
+    // error, display the localized error message to your customer
+    // using `error.message`.
+    console.warn(error.message);
+    setLoading(false);
+  };
 
   return (
     <div className={`min-h-screen overflow-hidden ${items.length === 0 ? "bg-white" : "bg-[#e7ecee]"}`}>
@@ -65,6 +99,7 @@ const Checkout = () => {
                       <Currency quantity={basketTotal} currency="USD" />
                     </p>
                   </div>
+
                   <div className="flex justify-between">
                     <p>Shipping</p>
                     <p>Free</p>
@@ -90,6 +125,7 @@ const Checkout = () => {
                       <p>$ -</p>
                     </div>
                   </div>
+
                   <div className="flex justify-between pt-4 text-xl font-semibold">
                     <h4>Total</h4>
                     <h4>
@@ -97,6 +133,7 @@ const Checkout = () => {
                       <Currency quantity={basketTotal} currency="USD" />
                     </h4>
                   </div>
+
                   <div className="my-14 space-y-4">
                     <div>
                       <h4 className="text-xl font-semibold">How would you like to check out?</h4>
@@ -123,13 +160,7 @@ const Checkout = () => {
                             </span>
                           </h4>
 
-                          <Button
-                            noIcon
-                            //    loading={loading}
-                            title="Check Out"
-                            width="w-full"
-                            //    onClick={createCheckoutSession}
-                          />
+                          <Button noIcon loading={loading} title="Check Out" width="w-full" onClick={createCheckoutSession} />
                         </div>
                       </div>
                     </div>
