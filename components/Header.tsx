@@ -1,3 +1,4 @@
+import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
@@ -5,7 +6,7 @@ import { selectBasketItems } from "../redux/feature/basketSlice";
 
 const Header = () => {
   const items = useSelector(selectBasketItems);
-  const session = false;
+  const { data: session } = useSession();
 
   return (
     <header className="sticky top-0 z-30 w-full items-center justify-between bg-[#e7ecee] p-4 flex">
@@ -44,14 +45,16 @@ const Header = () => {
           </div>
         </Link>
         {session ? (
-          <Image
-            src={
-              // session?.user?.image ||
-              "https://p.kindpng.com/picc/s/668-6689202_avatar-profile-hd-png-download.png"
-            }
-            alt="user"
-            // onClick={() => signOut()}
-          />
+          <div className="flex items-center cursor-pointer">
+            <Image
+              width={25}
+              height={25}
+              className="rounded-[50%]"
+              src={session?.user?.image || "https://p.kindpng.com/picc/s/668-6689202_avatar-profile-hd-png-download.png"}
+              alt="user"
+              onClick={() => signOut()}
+            />
+          </div>
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -59,8 +62,8 @@ const Header = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
-            // onClick={() => signIn()}
+            className="w-6 h-6 cursor-pointer"
+            onClick={() => signIn()}
           >
             <path
               strokeLinecap="round"
