@@ -8,6 +8,7 @@ import blockContent from "./blockContent";
 import category from "./category";
 import product from "./product";
 
+import { account, user } from "next-auth-sanity/schemas";
 import localeBlockContent from "./locale/BlockContent";
 import localeString from "./locale/String";
 import localeText from "./locale/Text";
@@ -29,5 +30,7 @@ export default createSchema({
     localeText,
     localeBlockContent,
     localeString,
+    user,
+    account,
   ]),
 });
